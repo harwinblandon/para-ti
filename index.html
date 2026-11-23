@@ -44,8 +44,8 @@ const CONFIG = {
     "35357662a78ff1995f169e8803dbd0b9c2a85501fb0a681ce2b46ab51276fa86"
   ],
 
-  // A dónde llega su respuesta (vía FormSubmit.co)
-  email: "harwinblandon@gmail.com",
+  // A dónde llega su respuesta: Access Key de Web3Forms (se obtiene gratis en web3forms.com con tu correo)
+  web3formsKey: "df182ac7-4ce0-4682-93ce-2ff237538bc6",
   // Plan B si falla el envío: tu WhatsApp con código de país, solo números (ej. "573001234567"). "" para ocultarlo
   whatsapp: "",
 
@@ -405,20 +405,24 @@ $("backBtn").onclick = () => show("s-ask");
 $("sendBtn").onclick = async () => {
   const note = $("note").value.trim();
   const payload = {
-    _subject: answer === "SÍ" ? "💍 ¡Dijo que SÍ!" : "💭 Respuesta a tu invitación: lo está pensando",
-    _template: "box", _captcha: "false",
+    access_key: CONFIG.web3formsKey,
+    subject: answer === "SÍ" ? "✅ ¡Dijo que SÍ a la cita!" : "💭 Respuesta a tu invitación: " + answer,
+    from_name: "Invitación cita.redhb.com",
     Respuesta: answer,
     Comentario: note || "(sin comentario)",
-    Fecha: new Date().toLocaleString("es")
+    Fecha: new Date().toLocaleString("es"),
+    botcheck: false
   };
   $("sendBtn").disabled = true; $("status").textContent = "Enviando…";
   let sent = false;
   try {
-    const r = await fetch("https://formsubmit.co/ajax/" + CONFIG.email, {
-      method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body: JSON.stringify(payload)
+    const ctrl = new AbortController(); const to = setTimeout(()=>ctrl.abort(), 15000);
+    const r = await fetch("https://api.web3forms.com/submit", {
+      method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body: JSON.stringify(payload), signal: ctrl.signal
     });
+    clearTimeout(to);
     const j = await r.json().catch(()=>({}));
-    sent = r.ok && String(j.success) !== "false";
+    sent = r.ok && j.success === true;
   } catch(_) {}
   store.set("respuesta", { answer, note, sent, at: Date.now() });
   $("sendBtn").disabled = false; $("status").textContent = "";
