@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%23b08d57' stroke-width='5'/><path d='M50 26 L55 45 L74 50 L55 55 L50 74 L45 55 L26 50 L45 45Z' fill='%23b08d57'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23f6f2eb'/><text x='50' y='68' text-anchor='middle' font-family='Georgia,serif' font-size='54' fill='%232a2521'>H<tspan dx='-14' fill='%233d4f6b'>E</tspan></text></svg>">
 
 <script>
 /* ============================================================
@@ -80,7 +80,7 @@ const CONFIG = {
 <style>
 :root{
   --bg:#f6f2eb; --bg2:#efe9df; --ink:#2a2521; --muted:#8b8279; --line:#d9d0c3;
-  --gold:#b08d57; --gold-soft:#d8c3a0;
+  --gold:#3d4f6b; --gold-soft:#9aa6b8;
   --serif:"Cormorant Garamond", Georgia, serif;
   --sans:"Inter", system-ui, -apple-system, sans-serif;
 }
@@ -118,14 +118,13 @@ h1 em{font-style:italic; color:var(--gold)}
 
 /* Sello */
 .ring{width:120px;height:120px;margin-bottom:28px;flex-shrink:0}
-.ring .band{fill:none;stroke:var(--gold);stroke-width:1.4;stroke-dasharray:252;stroke-dashoffset:252;transition:stroke-dashoffset 2.4s cubic-bezier(.65,0,.35,1)}
+.ring .band{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset 2.4s cubic-bezier(.65,0,.35,1)}
 .ring .ghost{fill:none;stroke:var(--line);stroke-width:1}
 .ring .gem{fill:none;stroke:var(--gold);stroke-width:1.2;opacity:0;transition:opacity 1s ease 1.8s}
 .ring.drawn .band{stroke-dashoffset:0} .ring.drawn .gem{opacity:1}
-.ring .mono{font-family:var(--serif); font-weight:300; font-size:34px; letter-spacing:0; fill:var(--ink); animation:monoIn 2.4s ease .4s both}
-.ring .mono .yy{font-style:italic; font-size:20px; fill:var(--gold)}
+.ring .mono{font-family:var(--serif); font-weight:400; font-size:52px; letter-spacing:0; fill:var(--ink); animation:monoIn 2.4s ease .4s both}
+.ring .mono .i2{fill:var(--gold)}
 #s-lock .ring{width:132px;height:132px}
-.ring.drawn .mono{fill:var(--gold); transition:fill 1.6s ease 1s}
 @keyframes monoIn{from{opacity:0; filter:blur(4px)}to{opacity:1; filter:none}}
 .pet{font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(28px,7.5vw,36px); color:var(--ink); line-height:1.2; margin-top:6px}
 .ring.spin{animation:float 6s ease-in-out infinite}
@@ -232,13 +231,12 @@ textarea:focus{border-color:var(--gold)}
 <!-- 1 · Acceso -->
 <section class="screen on" id="s-lock">
   <svg class="ring" id="ring1" viewBox="0 0 120 120" aria-hidden="true">
-    <circle class="ghost" cx="60" cy="60" r="40"/>
-    <circle class="band" cx="60" cy="60" r="40" transform="rotate(-90 60 60)"/>
-    <text class="mono" x="60" y="70" text-anchor="middle"><tspan class="i1">H</tspan><tspan class="yy" dx="-2" dy="5">y</tspan><tspan class="i2" dx="-3" dy="-5">E</tspan></text>
+    <text class="mono" x="60" y="74" text-anchor="middle"><tspan class="i1">H</tspan><tspan class="i2" dx="-14">E</tspan></text>
+    <line class="ghost" x1="40" y1="92" x2="80" y2="92"/>
+    <line class="band" x1="40" y1="92" x2="80" y2="92"/>
   </svg>
   <p class="eyebrow" style="font-size:12px">Para mi amor</p>
-  <div class="rule" style="margin:22px auto"></div>
-  <form id="lockForm" autocomplete="off">
+  <form id="lockForm" style="margin-top:40px" autocomplete="off">
     <label class="eyebrow" for="pw" style="display:block">Clave de acceso</label>
     <p class="hint" id="hint"></p>
     <div class="field" style="margin:0 auto" id="field"><input id="pw" type="text" inputmode="text" placeholder="· · · · · ·" aria-label="Clave" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
@@ -295,9 +293,9 @@ textarea:focus{border-color:var(--gold)}
 <!-- 5 · Final -->
 <section class="screen" id="s-end">
   <svg class="ring spin" id="ring2" viewBox="0 0 120 120" aria-hidden="true">
-    <circle class="ghost" cx="60" cy="60" r="40"/>
-    <circle class="band" cx="60" cy="60" r="40" transform="rotate(-90 60 60)"/>
-    <text class="mono" x="60" y="70" text-anchor="middle"><tspan class="i1">H</tspan><tspan class="yy" dx="-2" dy="5">y</tspan><tspan class="i2" dx="-3" dy="-5">E</tspan></text>
+    <text class="mono" x="60" y="74" text-anchor="middle"><tspan class="i1">H</tspan><tspan class="i2" dx="-14">E</tspan></text>
+    <line class="ghost" x1="40" y1="92" x2="80" y2="92"/>
+    <line class="band" x1="40" y1="92" x2="80" y2="92"/>
   </svg>
   <div id="endBody"></div>
 </section>
@@ -494,7 +492,7 @@ function spawn(n, b){
     vx: b ? (Math.random()-.5)*6*dpr : (Math.random()-.5)*.3,
     vy: b ? (-Math.random()*6-1)*dpr : (Math.random()*.4+.2)*dpr,
     g: b ? .06*dpr : 0,
-    r: (Math.random()*1.8+.6)*dpr, a: Math.random()*.6+.3, life: 1, rot: Math.random()*6, fade: b ? .005 : 0
+    r: (Math.random()*1.8+.6)*dpr, a: b ? Math.random()*.6+.3 : Math.random()*.35+.2, c: b ? "#3d4f6b" : "#9aa6b8", life: 1, rot: Math.random()*6, fade: b ? .005 : 0
   });
 }
 function burst(){ spawn(140, true); }
@@ -504,7 +502,7 @@ setInterval(()=>{ if (P.length < 40) spawn(1,false); }, 380);
   P = P.filter(p => p.y < H+20 && p.life > 0);
   for (const p of P){
     p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= .985; p.rot += .02; p.life -= p.fade;
-    cx.globalAlpha = p.a*p.life; cx.fillStyle = "#b08d57";
+    cx.globalAlpha = p.a*p.life; cx.fillStyle = p.c;
     cx.save(); cx.translate(p.x,p.y); cx.rotate(p.rot); cx.fillRect(-p.r,-p.r/2,p.r*2,p.r); cx.restore();
   }
   requestAnimationFrame(loop);
