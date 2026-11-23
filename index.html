@@ -58,8 +58,8 @@ const CONFIG = {
   ],
 
   // Invitación (sin pistas: solo una cita especial)
-  invitacion: "Quiero invitarte a una cita muy especial. Ese día salimos más temprano: a las 3:30&nbsp;p.&nbsp;m. paso por ti.",
-  placeholderComentario: "¿Alguna sugerencia? ¿Prefieres otra hora? Cuéntamelo aquí…",
+  invitacion: "Quiero regalarte una tarde especial, solo para los dos.",
+  recogida: "Paso por ti a las",
   pregunta: "¿Vienes conmigo?",
   textoSi: "Sí, ahí estaré",
   textoPensar: "Déjame ver mi agenda",
@@ -72,7 +72,7 @@ const CONFIG = {
     lugar:  "Sorpresa",
     direccion: "Yo paso por ti",
     mapa: "",                      // link de Google Maps ("" para ocultar; mejor vacío para no revelar el lugar)
-    vestimenta: "Elegante y cómoda"
+    vestimenta: "Elegante, porque hermosa siempre estás"
   }
 };
 </script>
@@ -193,11 +193,16 @@ button{-webkit-tap-highlight-color:transparent}
 }
 
 /* Comentario */
+/* hoja de notas con renglones */
 textarea{
-  width:min(460px,86vw); min-height:130px; resize:vertical; background:rgba(255,255,255,.35); border:1px solid var(--line); border-radius:0;
-  padding:18px; font-family:var(--serif); font-size:20px; color:var(--ink); outline:none; line-height:1.45; transition:border-color .4s;
+  width:min(460px,86vw); height:calc(34px * 5 + 8px); resize:none; border:0; border-radius:0; outline:none;
+  padding:4px 6px; font-family:var(--serif); font-style:italic; font-size:21px; line-height:34px; color:var(--ink);
+  background-color:transparent; background-attachment:local;
+  background-image:repeating-linear-gradient(to bottom, transparent 0, transparent 33px, var(--line) 33px, var(--line) 34px);
+  background-position:0 4px; transition:background-image .4s;
 }
-textarea:focus{border-color:var(--gold)}
+textarea:focus{background-image:repeating-linear-gradient(to bottom, transparent 0, transparent 33px, var(--gold-soft) 33px, var(--gold-soft) 34px)}
+.pick{display:block; margin-top:6px; line-height:1.4; font-family:var(--serif); font-style:italic; font-size:21px; letter-spacing:0; text-transform:none; color:var(--ink)}
 .link{background:none;border:0;color:var(--muted);font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;margin-top:18px;text-decoration:underline;text-underline-offset:5px}
 
 /* Final */
@@ -388,9 +393,8 @@ document.addEventListener("keydown", e => { if ($("s-msg").classList.contains("o
 $("askTo").textContent = ap(0);
 $("invite").innerHTML = esc(CONFIG.invitacion).replace(/&amp;nbsp;/g,"&nbsp;");
 $("question").textContent = CONFIG.pregunta;
-$("when").innerHTML = `<span>${esc(fechaLarga)}</span><span>${esc(hora)}</span>`;
+$("when").innerHTML = `<span>${esc(fechaCorta)}</span><span class="pick">${esc(CONFIG.recogida)} ${esc(hora)}</span>`;
 $("yesBtn").textContent = CONFIG.textoSi;
-$("note").placeholder = CONFIG.placeholderComentario;
 $("thinkBtn").textContent = CONFIG.textoPensar;
 
 let answer = null;
