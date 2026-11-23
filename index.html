@@ -417,20 +417,19 @@ $("sendBtn").onclick = async () => {
     Fecha: new Date().toLocaleString("es"),
     botcheck: false
   };
-  $("sendBtn").disabled = true; $("status").textContent = "Enviando…";
-  let sent = false;
-  try {
-    const ctrl = new AbortController(); const to = setTimeout(()=>ctrl.abort(), 15000);
-    const r = await fetch("https://api.web3forms.com/submit", {
-      method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body: JSON.stringify(payload), signal: ctrl.signal
-    });
-    clearTimeout(to);
-    const j = await r.json().catch(()=>({}));
-    sent = r.ok && j.success === true;
-  } catch(_) {}
+  $("sendBtn").disabled = true; $("sendBtn").textContent = "Enviando…";
+  // FormData = petición simple (sin preflight CORS); keepalive = el envío sigue aunque cambie la pantalla
+  const fd = new FormData();
+  Object.entries(payload).forEach(([k,v]) => fd.append(k, String(v)));
+  const req = fetch("https://api.web3forms.com/submit", { method:"POST", body: fd, keepalive: true, headers:{ Accept:"application/json" } })
+    .then(r => r.json().then(j => j.success === true).catch(() => r.ok))
+    .catch(() => null);           // null = no sabemos (p. ej. CORS), el correo pudo haber salido
+  const first = await Promise.race([req, new Promise(r => setTimeout(() => r("pending"), 2000))]);
+  const sent = first !== false;   // solo mostramos error si Web3Forms dijo explícitamente que falló
   store.set("respuesta", { answer, note, sent, at: Date.now() });
-  $("sendBtn").disabled = false; $("status").textContent = "";
+  $("sendBtn").disabled = false; $("sendBtn").textContent = "Enviar";
   finish(answer, note, sent);
+  if (first === "pending") req.then(ok => { if (ok === false) $("endBody").insertAdjacentHTML("beforeend", `<p class="status">No pude enviar tu respuesta automáticamente. Cuéntamela en persona ♡</p>`); });
 };
 
 /* ---------- 5 · Final ---------- */
